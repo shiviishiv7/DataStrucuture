@@ -1,0 +1,64 @@
+class Node{
+    constructor(value){
+        this.data = value
+        this.next = null;
+    }
+
+}
+class NodeList {
+    constructor(){
+        this.root = null;
+    }
+    getRootNode(){
+        return this.root;
+    }
+    setRootNode(root){
+        this.root = root;
+    }
+    insert(root,value){
+        if(!root){
+            let node = new Node(value)
+            this.setRootNode(node);
+        }else if(root.next==null){
+                let node = new Node(value);
+                root.next = node;
+        }else{
+            this.insert(root.next,value);
+        }
+    }
+    display(root){
+        if(root){
+            console.log(root.data)
+            this.display(root.next);
+      
+        }
+    }
+    merge(head1,head2){
+        if(!head1)return head2;
+        if(!head2)return head1;
+        let list ;
+        if(head1.data>head2.data){
+            list = head2;
+            head2=head2.next;
+        }else{
+            list= head1;
+            head1=head1.next
+        }
+        let newHead = list;
+        while(head1 && head2){
+            if(head1.data>head2.data){
+                list.next = head2;
+                list  = head2;
+                head2=head2.next;
+            }else{
+                list.next = head1;
+                list= head1;
+                head1=head1.next;
+            }
+        }
+        if(!head1)list.next=head2;
+        if(!head2)list.next=head1;
+        return newHead;
+    }
+}
+module.exports = NodeList;
